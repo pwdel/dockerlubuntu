@@ -352,4 +352,5 @@ Overall Lubuntu works great and is likely preferable for running Docker over Ubu
 
 ## Future Work
 
-https://medium.com/better-programming/super-slim-docker-containers-fdaddc47e560
+Futher research on creating low resource docker images is needed.  We can take a look [here](https://medium.com/better-programming/super-slim-docker-containers-fdaddc47e560).
+
