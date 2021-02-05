@@ -188,41 +188,7 @@ We can then look at our image on our local machine as follows:
 | myimage    | latest | 05a6228906d9 | 7 minutes ago | 893MB |
 | python     | 3.8    | 40251af0bd62 | 3 days ago    | 883MB |
 
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-</style>
-<table class="tg">
-<thead>
-  <tr>
-    <th class="tg-0pky">REPOSITORY</th>
-    <th class="tg-0pky">TAG</th>
-    <th class="tg-0pky">IMAGE ID</th>
-    <th class="tg-0pky">CREATED</th>
-    <th class="tg-0pky">SIZE</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td class="tg-0pky">myimage</td>
-    <td class="tg-0pky">latest</td>
-    <td class="tg-0pky">05a6228906d9</td>
-    <td class="tg-0pky">7 minutes ago</td>
-    <td class="tg-0pky">893MB</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">python</td>
-    <td class="tg-0pky">3.8</td>
-    <td class="tg-0pky">40251af0bd62</td>
-    <td class="tg-0pky">3 days ago</td>
-    <td class="tg-0pky">883MB</td>
-  </tr>
-</tbody>
-</table>
+
 
 
 
