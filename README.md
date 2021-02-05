@@ -4,6 +4,8 @@
 
 The purpose of this repo is to test out Docker on Lubuntu.  I'm sure it probably works, but we'll just install and run it just to make absolute certain.
 
+Note, we followed [this guide by Anca Iordache](https://www.docker.com/blog/containerized-python-development-part-1/) in building the following demonstration.
+
 ## Setup
 
 ### Installing Docker Engine
@@ -189,6 +191,49 @@ We can then look at our image on our local machine as follows:
 | python     | 3.8    | 40251af0bd62 | 3 days ago    | 883MB |
 
 
+Of course, 893MB is quite large and there are ways that we can slim this down.  However we can go over, "slimming down Docker builds," later in the article.
+
+### Running the Container
+
+So the next step would be to run the container and then run the app within the container.  To do so, we execute:
+
+```
+sudo docker run -d -p 5000:5000 myimage
+```
+Which yields:
+
+> 0db6b46921c1bc829d91cb8067fee8c3f2295a6bd3d898ee4766224ce1556c15
+
+Note that in the above, the options:
+
+* -d indicates, "detached," mode, which means we have to specifically call out the container when we run commands on that specific server. The opposite of this would be, "foreground," mode, which would point all docker commands towards that specific server, for convenience purposes.
+* -p indicates publishings all exposed ports to the host interfaces. So basically, [container networking](https://docs.docker.com/config/containers/container-networking/) is used because within the microservices paradigm, different apps may talk to each other while deployed on different servers. These servers each have a unique IP address, under standard ISO networking procedure, so the IP addresses are used on a local instance to simulate this structure. In short, we need to expose the external port in order to be able to connect to the container.
+
+So upon running the container with this command, we can look at the container with:
+
+```
+sudo docker ps
+```
+
+Which yields:
+
+
+| CONTAINER ID | IMAGE   | COMMAND              | CREATED        | STATUS        | PORTS                  | NAMES         |
+|--------------|---------|----------------------|----------------|---------------|------------------------|---------------|
+| 0db6b46921c1 | myimage | "python ./server.py" | 31 minutes ago | Up 31 minutes | 0.0.0.0:5000->5000/tcp | sweet_wescoff |
+
+By curling or visiting the localhost address, we can see our, "Hello World," output result.
+
+```
+$ curl http://localhost:5000   
+
+Hello World!
+
+```
+
+### Slimming Down the Container Design
+
+
 
 
 
@@ -196,8 +241,7 @@ To do next:
 
 
 
-* look at image in local image store
-* run the container
+
 * choice of base image
 * instruction order
 * briefly discuss multi-stage builds
