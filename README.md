@@ -185,6 +185,12 @@ This is because you have to have root permissions in order to run a docker comma
 
 We can then look at our image on our local machine as follows:
 
+```
+$ sudo docker images
+
+```
+
+
 | REPOSITORY | TAG    | IMAGE ID     | CREATED       | SIZE  |
 |------------|--------|--------------|---------------|-------|
 | myimage    | latest | 05a6228906d9 | 7 minutes ago | 893MB |
@@ -233,16 +239,117 @@ Hello World!
 
 ### Slimming Down the Container Design
 
+#### Base Image
+
+The base image we used was the Python 3.8 image. Of course, this is a massive image, essentially the, "entirety" of the base of Python 3.8.  There are slimmer versions. But what considerations must we take into account before just jumping the gun into a slimmer image?
+
+* Are the base images frequently updated?
+* Are there security concerns?
+
+The second question is of course a much larger question than the first. Presumably a frequently updated, or widely used image will have less security concerns, but it may also be more of a target.  These are just general questions to ask ourselves during the design process.  [This article](https://pythonspeed.com/articles/base-image-python-docker-images/) goes through a lot more questions and considerations for selecting a base image.
+
+> The official Docker Python image in its slim variant—e.g. python:3.9-slim-buster—is a good base image for most use cases. it’s 41MB to download, 114MB when uncompressed to disk, it gives you the latest Python releases, and it’s got all the benefits of Debian Buster.
 
 
+So to change our python image we want to change our Dockerese instruction set. Whereas previously, we used python:3.8
+
+```
+# set base image (host OS)
+FROM python:3.9-slim-buster
+
+```
+
+We should also pay attention to the order of operations within the Dockerfile. Basically, the way Dockerfiles work is like assembly code - line by line. We want the pre-chached things that change less frequently to happen first so that Docker can blast through these lines faster and get to the stuff that needs to be updated faster.
 
 
-To do next:
+```
+# copy the dependencies file to the working directory
+COPY requirements.txt .
+
+# install dependencies
+RUN pip install -r requirements.txt
+
+# copy the content of the local src directory to the working directory
+COPY src/ . 
+
+```
+
+The above looks pretty solid.  So let's consider what needs to be done next.
+
+### Building the Docker Image Again and Running the App
+
+Before we build a new Docker image, since Docker has a caching feature, let's just start from a completely clean slate, stop all containers, remove them, and then remove all images.  That way we can be sure that our build is run freshly from scratch.
+
+```
+# to list containers
+
+$ sudo docker ps -a 
+
+# to stop containers
+
+$ docker stop 0db6b46921c1
+
+# to delete containers
+
+$ docker rm 0db6b46921c1
+
+# to list images
+
+$ sudo docker images -a
+
+# to delete images
+
+$ sudo docker rmi 05a622890
+
+```
+Once we have comleted this for all relevant images.
+
+Run:
+
+```
+docker build -t myimage .
+```
+
+Looking at the size of the Image now:
+
+```
+$ sudo docker images
+```
+
+| REPOSITORY | TAG             | IMAGE ID     | CREATED        | SIZE  |
+|------------|-----------------|--------------|----------------|-------|
+| myimage    | latest          | f79624b6573b | 11 seconds ago | 124MB |
+| python     | 3.9-slim-buster | d5d352d7d840 | 3 days ago     | 114MB |
 
 
+As we can see, the images, including our base image, are significantly smaller, almost an order of magnitude smaller!
+
+However, we need to of course make sure things work.
+
+```
+sudo docker run -d -p 5000:5000 myimage
+```
+
+```
+$ curl http://localhost:5000   
+
+Hello World!
+
+```
+
+## Conclusion
+
+Basically, working with Docker on Lubuntu, at least with this simple was no problem.  The machine I used was a very old, Lenovo desktop with 3Ghz and 4MB of RAM. 
+
+| CONTAINER ID | NAME          | CPU % | MEM USAGE / LIMIT   | MEM % | NET I/O       | BLOCK I/O | PIDS |
+|--------------|---------------|-------|---------------------|-------|---------------|-----------|------|
+| 01a6d41f49f9 | sharp_satoshi | 0.03% | 19.04MiB / 7.691GiB | 0.24% | 5.14kB / 719B | 0B / 0B   | 1    |
+
+Given that the memory limit is set to 7GB, we would probably want to lower that for a local machine with limited resources.
+
+Overall Lubuntu works great and is likely preferable for running Docker over Ubunutu, which just adds extra memory overhead.
 
 
-* choice of base image
-* instruction order
-* briefly discuss multi-stage builds
-* try slim download of python
+## Future Work
+
+https://medium.com/better-programming/super-slim-docker-containers-fdaddc47e560
