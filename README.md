@@ -117,7 +117,7 @@ $ python3
 
 ```
 
-### Building the Dockerfile
+### Writing the Dockerfile
 
 A dockerfile is essentially a set of Dockerease instructions on how to build an app image.
 
@@ -131,6 +131,54 @@ app
 └─── src
      └─── server.py
 ```
+
+We have to add a dockerfile which includes instructions on how to build the app and environment according to the requirements.txt file.
+
+The dockerfile will do the following, in psuedocode:
+
+```
+# set base image (host OS)
+
+# set the working directory in the 
+# copy the dependencies file to the 
+
+# install dependencies
+
+# copy the content of the local src directory to the working directory
+
+# command to run on container start
+
+```
+
+The way we wrote our Dockerfile is so that the working directory is within the same location as the requirements.txt.
+
+The Dockerfile can be found [here](/app/Dockerfile).
+
+```
+app
+├─── requirements.txt
+├─── Dockerfile
+└─── src
+     └─── server.py
+```
+
+
+### Building the Docker Image
+
+So now, to run the dockerfile to create an image you do:
+
+```
+docker build -t myimage .
+```
+
+However, upon doing so, without any further setup you will recieve an error:
+
+> Got permission denied while trying to connect to the Docker daemon socket
+
+This is because you have to have root permissions in order to run a docker command.  Therefore, either add your current user to a group with root permissions, or run with sudo.  Then, you will get somthing along the lines of:
+
+> 3.8: Pulling from library/python
+> b9a857cbf04d: Pull complete   
 
 
 
