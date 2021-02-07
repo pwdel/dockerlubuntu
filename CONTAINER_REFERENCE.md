@@ -24,6 +24,14 @@ $ sudo docker images -a
 
 $ sudo docker rmi 05a622890
 
+# to build using docker-compose
+
+$ sudo docker-compose build
+
+# to run containers using docker-compose
+
+$ sudo docker-compose up
+
 ```
 
 * Making a Shell Script Executable
