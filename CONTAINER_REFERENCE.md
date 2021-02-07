@@ -1,5 +1,8 @@
 Container Restart Reference
 
+
+* Various Individual Commands
+
 ```
 # to list containers
 
@@ -22,3 +25,11 @@ $ sudo docker images -a
 $ sudo docker rmi 05a622890
 
 ```
+
+* Making a Shell Script Executable
+
+chmod +x script-name-here.sh
+
+* Executing Shell Script
+
+sudo ./script-name-here.sh
