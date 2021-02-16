@@ -116,7 +116,18 @@ $ sudo docker run --rm -it hello_flask bash
 
 ```
 
-# Rebuild and Release
+# Rebuild and Check on Development on Local
+```
+This is needed because we have to specify a port in order to inspect within localhost.
+
+Example
+
+1. sudo docker-compose -f docker-compose.yml up -d --build
+2. visit localhost:5000
+
+```
+
+# Rebuild and Release to Production on Heroku
 ```
 Example
 
@@ -126,3 +137,4 @@ Example
 4. heroku container:release web
 
 ```
+
