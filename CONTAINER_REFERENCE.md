@@ -47,6 +47,10 @@ $ sudo docker-compose down
 
 $ sudo docker run --rm -it app_name bash
 
+Example
+
+$ sudo docker run --rm -it hello_flask bash
+
 # Docker Compose Production File, Build in Detached Mode
 
 $ sudo docker-compose -f <production_compose.yml> up -d --build
@@ -138,3 +142,58 @@ Example
 
 ```
 
+# psql Scripts
+
+```
+Connect via Docker to a PSQL database...
+
+$ sudo docker-compose exec db psql --username=hello_flask --dbname=hello_flask_dev                                        
+
+psql (13.1)                                                                                                                                                                      
+Type "help" for help.                                                                                                                                                            
+                                                                                                                                                                                 
+
+Example
+
+```
+sudo docker exec -it db psql -d userlevels_flask_dev -U userlevels_flask
+```
+Generalized this is:
+
+```
+sudo docker exec -it DOCKERNAME psql -d DATABASENAME -U USERNAME
+```
+
+* connect to database
+
+hello_flask_dev=# \c hello_flask_dev
+
+* List databases
+
+\l
+
+* List tables
+
+\dt
+
+* Describe table
+
+\d table_name
+
+* List Schema
+
+\dn
+
+* List Functions
+
+\df
+
+* Get help
+
+\?
+
+Exit
+
+\q
+
+```
