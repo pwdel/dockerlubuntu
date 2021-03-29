@@ -118,6 +118,15 @@ Example
 
 $ sudo docker run --rm -it hello_flask bash
 
+# Running Bash within Existing Container
+
+$ sudo docker exec -it CONTAINER_NAME /bin/bash
+
+Example
+
+sudo docker exec -it hello_flask /bin/bash
+
+
 ```
 
 # Rebuild and Check on Development on Local
@@ -197,3 +206,24 @@ Exit
 \q
 
 ```
+
+# Running Flask Shell in Currently Running Container
+
+Login to currently running container:
+
+```
+$ sudo docker exec -it NAME /bin/bash
+
+$ sudo docker exec -it flask /bin/bash
+```
+
+From within the container or environment:
+
+```
+$ flask shell
+
+
+```
+More info:
+
+https://flask.palletsprojects.com/en/1.1.x/cli/#cli
